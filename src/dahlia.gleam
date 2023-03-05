@@ -4,10 +4,11 @@ import gleam/map
 import gleam/list
 import gleam/int
 import gleam/option.{None, Option, Some}
-import ansi/ansi.{Ansi}
+import dahlia/ansi.{Ansi}
+import dahlia/colors
 
 pub type Dahlia {
-  Dahlia(string: String, map: Option(map.Map(String, Ansi)))
+  Dahlia(string: String, colors: Option(map.Map(String, Ansi)))
 }
 
 pub fn dahlia(str: String) -> Dahlia {
@@ -15,7 +16,7 @@ pub fn dahlia(str: String) -> Dahlia {
 }
 
 pub fn build(d: Dahlia) -> String {
-  let map = case d.map {
+  let map = case d.colors {
     Some(map) -> map
     None ->
       map.new()
@@ -71,12 +72,20 @@ fn serialize_and_build_rest(
   )
 }
 
-pub fn with_map(d: Dahlia, map: map.Map(String, Ansi)) {
-  Dahlia(..d, map: Some(map))
+pub fn with_colors(d: Dahlia, colors: map.Map(String, Ansi)) {
+  Dahlia(..d, colors: Some(colors))
+}
+
+pub fn merge_colors(d: Dahlia, colors: map.Map(String, Ansi)) {
+  case d.colors {
+    Some(old_colors) -> Dahlia(..d, colors: Some(map.merge(old_colors, colors)))
+    None -> Dahlia(..d, colors: Some(colors))
+  }
 }
 
 pub fn main() {
-  dahlia("&[#000000]Hello from dahlia!")
+  dahlia("&o&5Hello &rfrom dahlia!")
+  |> with_colors(colors.three_bit())
   |> build()
   |> io.println
 }
