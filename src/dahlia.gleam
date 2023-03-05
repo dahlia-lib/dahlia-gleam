@@ -95,9 +95,9 @@ pub fn main() {
     |> string.to_graphemes()
     |> list.map(fn(c) { "&" <> c <> c })
     |> string.join("")
-    |> dahlia()
+    |> dahlia
     |> with_colors(color_map)
-    |> build()
+    |> build
     |> io.println
   })
 }
