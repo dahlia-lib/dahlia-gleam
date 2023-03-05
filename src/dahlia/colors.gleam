@@ -7,7 +7,7 @@ pub fn formatting() -> map.Map(String, Ansi) {
   |> map.insert("m", AnsiSGR(9))
   |> map.insert("n", AnsiSGR(4))
   |> map.insert("o", AnsiSGR(3))
-  |> map.insert("r", AnsiSGR(10))
+  |> map.insert("r", AnsiSGR(0))
 }
 
 pub fn three_bit() {
