@@ -2,6 +2,7 @@ import gleam/io
 import gleam/string
 import gleam/map
 import gleam/list
+import gleam/int
 import gleam/option.{None, Option, Some}
 import ansi/ansi.{Ansi}
 
@@ -31,14 +32,26 @@ fn build_inner(
 ) -> List(String) {
   case graphemes {
     [] -> []
+    ["&", "[", "#", a, b, c, d, e, f, "]", ..rest] -> {
+      let assert Ok(r) = int.base_parse(a <> b, 16)
+      let assert Ok(g) = int.base_parse(c <> d, 16)
+      let assert Ok(b) = int.base_parse(e <> f, 16)
+
+      let ansi = ansi.AnsiColor24(r, g, b, False)
+      serialize_and_build_rest(ansi, rest, codes)
+    }
+    ["&", "~", "[", "#", a, b, c, d, e, f, "]", ..rest] -> {
+      io.println("here")
+      let assert Ok(r) = int.base_parse(a <> b, 16)
+      let assert Ok(g) = int.base_parse(c <> d, 16)
+      let assert Ok(b) = int.base_parse(e <> f, 16)
+
+      let ansi = ansi.AnsiColor24(r, g, b, True)
+      serialize_and_build_rest(ansi, rest, codes)
+    }
     ["&", code, ..rest] ->
       case map.get(codes, code) {
-        Ok(ansi) ->
-          list.append(
-            ansi.serialize(ansi)
-            |> string.to_graphemes(),
-            build_inner(rest, codes),
-          )
+        Ok(ansi) -> serialize_and_build_rest(ansi, rest, codes)
         Error(_) ->
           list.append(["&"], build_inner(list.append([code], rest), codes))
       }
@@ -46,17 +59,24 @@ fn build_inner(
   }
 }
 
+fn serialize_and_build_rest(
+  ansi: Ansi,
+  rest: List(String),
+  codes: map.Map(String, Ansi),
+) {
+  list.append(
+    ansi.serialize(ansi)
+    |> string.to_graphemes(),
+    build_inner(rest, codes),
+  )
+}
+
 pub fn with_map(d: Dahlia, map: map.Map(String, Ansi)) {
   Dahlia(..d, map: Some(map))
 }
 
 pub fn main() {
-  dahlia("&a&bHello from dahlia!")
-  |> with_map(
-    map.new()
-    |> map.insert("a", ansi.AnsiSGR(3))
-    |> map.insert("b", ansi.AnsiColor4(31)),
-  )
+  dahlia("&[#000000]Hello from dahlia!")
   |> build()
   |> io.println
 }

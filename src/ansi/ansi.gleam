@@ -43,6 +43,6 @@ pub fn serialize(ansi: Ansi) -> String {
     AnsiColor4(c) -> ansi_func([c])
     AnsiColor8(c, background) -> ansi_func([if_else(!background, 38, 48), 5, c])
     AnsiColor24(r, g, b, background) ->
-      ansi_func([if_else(!background, 38, 48), 5, r, g, b])
+      ansi_func([if_else(!background, 38, 48), 2, r, g, b])
   }
 }
