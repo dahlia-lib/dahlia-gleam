@@ -1,7 +1,10 @@
-# dahlia
-
 [![Package Version](https://img.shields.io/hexpm/v/dahlia)](https://hex.pm/packages/dahlia)
 [![Hex Docs](https://img.shields.io/badge/hex-docs-ffaff3)](https://hexdocs.pm/dahlia/)
+
+# Dahlia.gleam
+
+A Gleam port of [Dahlia](https://github.com/trag1c/Dahlia) — a simple text formatting package, inspired by the game Minecraft.
+
 
 A Gleam project
 
