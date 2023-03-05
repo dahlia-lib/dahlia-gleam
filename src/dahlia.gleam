@@ -84,8 +84,20 @@ pub fn merge_colors(d: Dahlia, colors: map.Map(String, Ansi)) {
 }
 
 pub fn main() {
-  dahlia("&o&5Hello &rfrom dahlia!")
-  |> with_colors(colors.three_bit())
-  |> build()
-  |> io.println
+  [
+    colors.three_bit(),
+    colors.four_bit(),
+    colors.eight_bit(),
+    colors.twentyfour_bit(),
+  ]
+  |> list.map(fn(color_map) {
+    "0123456789abcdefg"
+    |> string.to_graphemes()
+    |> list.map(fn(c) { "&" <> c <> c })
+    |> string.join("")
+    |> dahlia()
+    |> with_colors(color_map)
+    |> build()
+    |> io.println
+  })
 }
