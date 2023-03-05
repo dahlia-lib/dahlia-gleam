@@ -3,10 +3,7 @@
 
 # Dahlia.gleam
 
-A Gleam port of [Dahlia](https://github.com/trag1c/Dahlia) — a simple text formatting package, inspired by the game Minecraft.
-
-
-A Gleam project
+A Gleam port of [Dahlia](https://github.com/dahlia-lib/Dahlia) — a simple text formatting package, inspired by the game Minecraft.
 
 ## Quick start
 
