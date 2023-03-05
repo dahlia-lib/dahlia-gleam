@@ -67,7 +67,7 @@ fn serialize_and_build_rest(
 ) {
   list.append(
     ansi.serialize(ansi)
-    |> string.to_graphemes(),
+    |> string.to_graphemes,
     build_inner(rest, codes),
   )
 }
