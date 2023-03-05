@@ -92,7 +92,7 @@ pub fn main() {
   ]
   |> list.map(fn(color_map) {
     "0123456789abcdefg"
-    |> string.to_graphemes()
+    |> string.to_graphemes
     |> list.map(fn(c) { "&" <> c <> c })
     |> string.join("")
     |> dahlia
