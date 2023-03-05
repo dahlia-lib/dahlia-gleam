@@ -3,6 +3,7 @@ import dahlia/ansi.{
   Ansi, AnsiColor24, AnsiColor3, AnsiColor4, AnsiColor8, AnsiSGR,
 }
 
+/// A color set of just formatting characters.
 pub fn formatting() -> map.Map(String, Ansi) {
   map.new()
   |> map.insert("l", AnsiSGR(1))
@@ -12,6 +13,8 @@ pub fn formatting() -> map.Map(String, Ansi) {
   |> map.insert("r", AnsiSGR(0))
 }
 
+/// A color set for terminals that support 3 bit ansi. This color set includes
+/// formatting characters.
 pub fn three_bit() {
   formatting()
   |> map.insert("0", AnsiColor3(30))
@@ -33,6 +36,8 @@ pub fn three_bit() {
   |> map.insert("g", AnsiColor3(33))
 }
 
+/// A color set for terminals that support 4 bit ansi. This color set includes
+/// formatting characters.
 pub fn four_bit() {
   formatting()
   |> map.insert("0", AnsiColor4(30))
@@ -54,6 +59,8 @@ pub fn four_bit() {
   |> map.insert("g", AnsiColor4(33))
 }
 
+/// A color set for terminals that support 8 bit ansi. This color set includes
+/// formatting characters.
 pub fn eight_bit() {
   formatting()
   |> map.insert("0", AnsiColor8(0, False))
@@ -75,6 +82,8 @@ pub fn eight_bit() {
   |> map.insert("g", AnsiColor8(184, False))
 }
 
+/// A color set for terminals that support 24 bit ansi. This color set includes
+/// formatting characters.
 pub fn twentyfour_bit() {
   formatting()
   |> map.insert("0", AnsiColor24(0, 0, 0, False))

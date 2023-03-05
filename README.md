@@ -5,13 +5,13 @@
 
 A Gleam port of [Dahlia](https://github.com/dahlia-lib/Dahlia) — a simple text formatting package, inspired by the game Minecraft.
 
-## Quick start
+## Exmaple
 
-```sh
-gleam run   # Run the project
-gleam test  # Run the tests
-gleam shell # Run an Erlang shell
+```gleam
+dahlia.dahlia()
+  |> dahlia.dprint("&aHello Wolrd")
 ```
+
 
 ## Installation
 
