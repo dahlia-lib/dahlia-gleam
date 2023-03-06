@@ -172,23 +172,3 @@ pub fn merge_colors(d: Dahlia, colors: map.Map(String, Ansi)) {
 pub fn with_escape_character(d: Dahlia, escape_character: String) -> Dahlia {
   Dahlia(..d, escape_character: escape_character)
 }
-
-pub fn main() {
-  [
-    colors.three_bit(),
-    colors.four_bit(),
-    colors.eight_bit(),
-    colors.twentyfour_bit(),
-  ]
-  |> list.map(fn(color_map) {
-    let dahlia =
-      dahlia()
-      |> with_colors(color_map)
-    "0123456789abcdefg"
-    |> string.to_graphemes
-    |> list.map(fn(c) { "&" <> c <> c })
-    |> string.join("")
-    |> function.flip(convert)(dahlia)
-    |> io.println
-  })
-}
