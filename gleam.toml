@@ -7,6 +7,7 @@ links = [{ title = "Website", href = "https://github.com/dahlia-lib/Dahlia.gleam
 
 [dependencies]
 gleam_stdlib = "~> 0.27"
+gleam_erlang = "~> 0.18"
 
 [dev-dependencies]
 gleeunit = "~> 0.10"

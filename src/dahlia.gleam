@@ -7,6 +7,7 @@ import gleam/option.{None, Option, Some}
 import gleam/function
 import dahlia/ansi.{Ansi}
 import dahlia/colors
+import dahlia/env
 
 pub type Dahlia {
   Dahlia(colors: Option(map.Map(String, Ansi)), escape_character: String)
@@ -27,7 +28,21 @@ pub fn dahlia() -> Dahlia {
 pub fn convert(d: Dahlia, string str: String) -> String {
   let map = case d.colors {
     Some(map) -> map
-    None -> colors.twentyfour_bit()
+    None ->
+      case env.get_env("NO_COLOR") {
+        Ok("1") -> map.new()
+        _ ->
+          case env.get_env("TERM") {
+            Ok(env) ->
+              case env {
+                "xterm" -> colors.eight_bit()
+                "xterm-256color" -> colors.twentyfour_bit()
+                // Idk what is supported so its set to 3 to be safe.
+                _ -> colors.three_bit()
+              }
+            Error(_) -> colors.twentyfour_bit()
+          }
+      }
   }
 
   convert_inner(string.to_graphemes(str), d.escape_character, map)
