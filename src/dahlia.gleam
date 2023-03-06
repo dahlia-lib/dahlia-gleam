@@ -2,7 +2,6 @@ import gleam/io
 import gleam/string
 import gleam/map
 import gleam/list
-import gleam/int
 import gleam/option.{None, Option, Some}
 import dahlia/ansi.{Ansi}
 import dahlia/colors
@@ -58,19 +57,13 @@ fn convert_inner(
     ["\\", esc, ..rest] if esc == escape_character ->
       list.append([esc], convert_inner(rest, escape_character, codes))
     [esc, "[", "#", a, b, c, d, e, f, "]", ..rest] if esc == escape_character -> {
-      let assert Ok(r) = int.base_parse(a <> b, 16)
-      let assert Ok(g) = int.base_parse(c <> d, 16)
-      let assert Ok(b) = int.base_parse(e <> f, 16)
-
-      let ansi = ansi.AnsiColor24(r, g, b, False)
+      let assert Ok(ansi) =
+        ansi.from_hex("#" <> a <> b <> c <> d <> e <> f, False)
       serialize_and_build_rest(ansi, rest, escape_character, codes)
     }
     [esc, "~", "[", "#", a, b, c, d, e, f, "]", ..rest] if esc == escape_character -> {
-      let assert Ok(r) = int.base_parse(a <> b, 16)
-      let assert Ok(g) = int.base_parse(c <> d, 16)
-      let assert Ok(b) = int.base_parse(e <> f, 16)
-
-      let ansi = ansi.AnsiColor24(r, g, b, True)
+      let assert Ok(ansi) =
+        ansi.from_hex("#" <> a <> b <> c <> d <> e <> f, True)
       serialize_and_build_rest(ansi, rest, escape_character, codes)
     }
     [esc, code, ..rest] if esc == escape_character ->

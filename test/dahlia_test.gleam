@@ -34,3 +34,13 @@ pub fn escape_and_test() {
   |> dahlia.convert("\\&aHello \\&aWorld!")
   |> should.equal("&aHello &aWorld!")
 }
+
+pub fn hex_notation_test() {
+  dahlia.dahlia()
+  |> dahlia.convert("&[#FFAFF3]Hello World!")
+  |> should.equal(ansi_escape_code() <> "[38;2;255;175;243mHello World!")
+
+  dahlia.dahlia()
+  |> dahlia.convert("&~[#FFAFF3]Hello World!")
+  |> should.equal(ansi_escape_code() <> "[48;2;255;175;243mHello World!")
+}

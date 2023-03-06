@@ -1,6 +1,7 @@
 import gleam/string
 import gleam/list
 import gleam/int
+import gleam/result
 
 pub type Ansi {
   /// Ansi4 uses a single digit code.
@@ -13,6 +14,26 @@ pub type Ansi {
   AnsiColor24(Int, Int, Int, background: Bool)
   /// SGR sequence, such as italics or bold.
   AnsiSGR(Int)
+}
+
+/// Create an `AnsiColor24` from a hex value.
+/// ```gleam
+/// let ansi = ansi.from_hex("#FFAFF3")
+/// ```
+pub fn from_hex(
+  string str: String,
+  bacgrkound background: Bool,
+) -> Result(Ansi, Nil) {
+  use [_, a, b, c, d, e, f] <- result.then(case string.length(str) == 7 {
+    False -> Error(Nil)
+    True -> Ok(string.to_graphemes(str))
+  })
+
+  use r <- result.then(int.base_parse(a <> b, 16))
+  use g <- result.then(int.base_parse(c <> d, 16))
+  use b <- result.then(int.base_parse(e <> f, 16))
+
+  Ok(AnsiColor24(r, g, b, background))
 }
 
 fn ansi_escape_code() -> String {
