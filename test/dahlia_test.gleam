@@ -3,13 +3,9 @@ import gleeunit
 import gleeunit/should
 import dahlia
 import dahlia/colors
-import gleam/io
-import dahlia/env
 
 pub fn main() {
-  env.get_env("TERM")
-  |> io.debug
-  // gleeunit.main()
+  gleeunit.main()
 }
 
 fn ansi_escape_code() -> String {
