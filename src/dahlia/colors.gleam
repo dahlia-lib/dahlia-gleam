@@ -1,3 +1,5 @@
+//// This module contains colorsets to be used with `dahlia.with_colors`.
+
 import gleam/map
 import dahlia/ansi.{
   Ansi, AnsiColor24, AnsiColor3, AnsiColor4, AnsiColor8, AnsiSGR,

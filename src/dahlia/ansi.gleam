@@ -1,3 +1,5 @@
+//// This module contains tools to work with ansi.
+
 import gleam/string
 import gleam/list
 import gleam/int
