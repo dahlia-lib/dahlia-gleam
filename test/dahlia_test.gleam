@@ -20,6 +20,13 @@ pub fn basic_colors_test() {
   |> should.equal(ansi_escape_code() <> "[32mHello World!")
 }
 
+pub fn invalid_code_test() {
+  dahlia.dahlia()
+  |> dahlia.with_colors(colors.three_bit())
+  |> dahlia.convert("&ZHello World!")
+  |> should.equal("&ZHello World!")
+}
+
 pub fn custom_escape_test() {
   dahlia.dahlia()
   |> dahlia.with_colors(colors.three_bit())
