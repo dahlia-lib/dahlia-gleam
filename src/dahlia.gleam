@@ -26,18 +26,18 @@ pub fn dahlia() -> Dahlia {
 /// io.println(result)
 /// ```
 pub fn convert(d: Dahlia, string str: String) -> String {
-  let map = case d.colors {
-    Some(map) -> map
-    None ->
-      case env.get_env("NO_COLOR") {
-        Ok("1") -> map.new()
-        _ ->
+  let map = case env.get_env("NO_COLOR") {
+    Ok("1") -> map.new()
+    _ ->
+      case d.colors {
+        Some(map) -> map
+        None ->
           case env.get_env("TERM") {
             Ok(env) ->
               case env {
                 "xterm" -> colors.eight_bit()
                 "xterm-256color" -> colors.twentyfour_bit()
-                // Idk what is supported so its set to 3 to be safe.
+                // Idk what is support so its set to 3 to be safe.
                 _ -> colors.three_bit()
               }
             Error(_) -> colors.twentyfour_bit()
