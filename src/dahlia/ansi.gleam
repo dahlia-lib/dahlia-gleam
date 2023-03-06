@@ -6,13 +6,13 @@ import gleam/int
 import gleam/result
 
 pub type Ansi {
-  /// Ansi4 uses a single digit code.
+  /// AnsiColor3 uses a single digit code.
   AnsiColor3(Int)
-  /// Ansi4 uses a single digit code.
+  /// AnsiColor4 uses a single digit code.
   AnsiColor4(Int)
-  /// Ansi8 uses a single digit code for a number.
+  /// AnsiColor8 uses a single digit code for a number.
   AnsiColor8(Int, background: Bool)
-  /// Ansi 24 is represented as RGB
+  /// AnsiColor24 is represented as RGB
   AnsiColor24(Int, Int, Int, background: Bool)
   /// SGR sequence, such as italics or bold.
   AnsiSGR(Int)
