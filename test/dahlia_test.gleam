@@ -13,10 +13,24 @@ fn ansi_escape_code() -> String {
   string.from_utf_codepoints([ansi_escape_codepoint])
 }
 
-// gleeunit test functions end in `_test`
 pub fn basic_colors_test() {
   dahlia.dahlia()
   |> dahlia.with_colors(colors.three_bit())
-  |> dahlia.convert("&aHello Wolrd!")
+  |> dahlia.convert("&aHello World!")
   |> should.equal(ansi_escape_code() <> "[32mHello World!")
+}
+
+pub fn custom_escape_test() {
+  dahlia.dahlia()
+  |> dahlia.with_colors(colors.three_bit())
+  |> dahlia.with_escape_character("%")
+  |> dahlia.convert("%aHello World!")
+  |> should.equal(ansi_escape_code() <> "[32mHello World!")
+}
+
+pub fn escape_and_test() {
+  dahlia.dahlia()
+  |> dahlia.with_colors(colors.three_bit())
+  |> dahlia.convert("\\&aHello \\&aWorld!")
+  |> should.equal("&aHello &aWorld!")
 }

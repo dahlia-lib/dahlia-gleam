@@ -4,7 +4,6 @@ import gleam/map
 import gleam/list
 import gleam/int
 import gleam/option.{None, Option, Some}
-import gleam/function
 import dahlia/ansi.{Ansi}
 import dahlia/colors
 import dahlia/env
@@ -56,6 +55,7 @@ fn convert_inner(
 ) -> List(String) {
   case graphemes {
     [] -> []
+    ["\\", "&", ..rest] -> list.append(["&"], convert_inner(rest, escape_character, codes))
     [esc, "[", "#", a, b, c, d, e, f, "]", ..rest] if esc == escape_character -> {
       let assert Ok(r) = int.base_parse(a <> b, 16)
       let assert Ok(g) = int.base_parse(c <> d, 16)
