@@ -16,14 +16,6 @@ jobs:
           rebar3-version: "3"
           elixir-version: "1.14.2"
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - run: |
-          cd priv
-          npm install
-          cd ..
-
       - name: Publish
         run: gleam publish -y
         env:
