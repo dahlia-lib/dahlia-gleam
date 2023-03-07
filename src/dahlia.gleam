@@ -107,22 +107,25 @@ fn serialize_and_build_rest(
   )
 }
 
-/// Print a string as a formatted string.
+/// Print a string as a formatted string and return the Dahlia object.
 ///
 /// ```gleam
 /// dahlia.dahlia()
 ///   |> dahlia.dprint("&aHello Wolrd")
+///   |> dahlia.dprint("&aSomething else")
 /// ```
-pub fn dprint(d: Dahlia, string str: String) {
+pub fn dprint(d: Dahlia, string str: String) -> Dahlia {
   convert(d, str)
   |> io.print
+  d
 }
 
 /// Print a string as a formatted string, but with a newline
-/// after it.
-pub fn dprintln(d: Dahlia, string str: String) {
+/// after it. Also return the Dahlia object.
+pub fn dprintln(d: Dahlia, string str: String) -> Dahlia {
   convert(d, str)
   |> io.println
+  d
 }
 
 /// Use a custom color set for the dahlia object.
