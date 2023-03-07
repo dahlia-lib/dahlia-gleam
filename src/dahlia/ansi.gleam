@@ -11,9 +11,9 @@ pub type Ansi {
   /// AnsiColor4 uses a single digit code.
   AnsiColor4(Int)
   /// AnsiColor8 uses a single digit code for a number.
-  AnsiColor8(Int, background: Bool)
+  AnsiColor8(Int)
   /// AnsiColor24 is represented as RGB
-  AnsiColor24(Int, Int, Int, background: Bool)
+  AnsiColor24(Int, Int, Int)
   /// SGR sequence, such as italics or bold.
   AnsiSGR(Int)
 }
@@ -22,10 +22,7 @@ pub type Ansi {
 /// ```gleam
 /// let ansi = ansi.from_hex("#FFAFF3")
 /// ```
-pub fn from_hex(
-  string str: String,
-  bacgrkound background: Bool,
-) -> Result(Ansi, Nil) {
+pub fn from_hex(string str: String) -> Result(Ansi, Nil) {
   use [_, a, b, c, d, e, f] <- result.then(case string.length(str) == 7 {
     False -> Error(Nil)
     True -> Ok(string.to_graphemes(str))
@@ -35,7 +32,7 @@ pub fn from_hex(
   use g <- result.then(int.base_parse(c <> d, 16))
   use b <- result.then(int.base_parse(e <> f, 16))
 
-  Ok(AnsiColor24(r, g, b, background))
+  Ok(AnsiColor24(r, g, b))
 }
 
 fn ansi_escape_code() -> String {
@@ -59,13 +56,13 @@ fn if_else(bool: Bool, if_: a, else: a) -> a {
   }
 }
 
-pub fn serialize(ansi: Ansi) -> String {
+pub fn serialize(ansi: Ansi, background: Bool) -> String {
   case ansi {
     AnsiSGR(n) -> ansi_func([n])
-    AnsiColor3(c) -> ansi_func([c])
-    AnsiColor4(c) -> ansi_func([c])
-    AnsiColor8(c, background) -> ansi_func([if_else(!background, 38, 48), 5, c])
-    AnsiColor24(r, g, b, background) ->
+    AnsiColor3(c) -> ansi_func([if_else(!background, c, c + 10)])
+    AnsiColor4(c) -> ansi_func([if_else(!background, c, c + 10)])
+    AnsiColor8(c) -> ansi_func([if_else(!background, 38, 48), 5, c])
+    AnsiColor24(r, g, b) ->
       ansi_func([if_else(!background, 38, 48), 2, r, g, b])
   }
 }

@@ -57,19 +57,31 @@ fn convert_inner(
     ["\\", esc, ..rest] if esc == escape_character ->
       list.append([esc], convert_inner(rest, escape_character, codes))
     [esc, "[", "#", a, b, c, d, e, f, "]", ..rest] if esc == escape_character -> {
-      let assert Ok(ansi) =
-        ansi.from_hex("#" <> a <> b <> c <> d <> e <> f, False)
-      serialize_and_build_rest(ansi, rest, escape_character, codes)
+      let assert Ok(ansi) = ansi.from_hex("#" <> a <> b <> c <> d <> e <> f)
+      serialize_and_build_rest(ansi, False, rest, escape_character, codes)
     }
     [esc, "~", "[", "#", a, b, c, d, e, f, "]", ..rest] if esc == escape_character -> {
-      let assert Ok(ansi) =
-        ansi.from_hex("#" <> a <> b <> c <> d <> e <> f, True)
-      serialize_and_build_rest(ansi, rest, escape_character, codes)
+      let assert Ok(ansi) = ansi.from_hex("#" <> a <> b <> c <> d <> e <> f)
+      serialize_and_build_rest(ansi, True, rest, escape_character, codes)
     }
+    [esc, "~", code, ..rest] if esc == escape_character ->
+      case map.get(codes, code) {
+        Ok(ansi) ->
+          serialize_and_build_rest(ansi, True, rest, escape_character, codes)
+        Error(_) ->
+          list.append(
+            [escape_character],
+            convert_inner(
+              list.append(["~", code], rest),
+              escape_character,
+              codes,
+            ),
+          )
+      }
     [esc, code, ..rest] if esc == escape_character ->
       case map.get(codes, code) {
         Ok(ansi) ->
-          serialize_and_build_rest(ansi, rest, escape_character, codes)
+          serialize_and_build_rest(ansi, False, rest, escape_character, codes)
         Error(_) ->
           list.append(
             [escape_character],
@@ -83,12 +95,13 @@ fn convert_inner(
 
 fn serialize_and_build_rest(
   ansi: Ansi,
+  background: Bool,
   rest: List(String),
   escape_character: String,
   codes: map.Map(String, Ansi),
 ) {
   list.append(
-    ansi.serialize(ansi)
+    ansi.serialize(ansi, background)
     |> string.to_graphemes,
     convert_inner(rest, escape_character, codes),
   )
