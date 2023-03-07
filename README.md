@@ -28,10 +28,10 @@ and its documentation can be found at <https://hexdocs.pm/dahlia>.
 
 You can find a list of color codes on [the minecraft wiki](https://minecraft.fandom.com/wiki/Formatting_codes).
 
-Addtionally you can do `&[#HEXNUM]` for a custom foreground color and `&~[#HEXNUM]` for
-a custom background color.
-
-
-
-
-
+| Command      | Description |
+| -----------  | ----------- |
+| `&n` | Change the color to `n` |
+| `&~n` | Change the background color to `n` |
+| `&[#HEXNUM]` | Change the color to `#HEXNUM` |
+| `&~[#HEXNUM]` | Change the background color to `#HEXNUM` |
+| `\\&` | Display an & |

@@ -50,6 +50,11 @@ pub fn escape_and_test() {
   |> dahlia.with_colors(colors.three_bit())
   |> dahlia.convert("\\&aHello \\&aWorld!")
   |> should.equal("&aHello &aWorld!")
+
+  dahlia.dahlia()
+  |> dahlia.with_colors(colors.three_bit())
+  |> dahlia.convert("\\&ZHello \\&ZWorld!")
+  |> should.equal("&ZHello &ZWorld!")
 }
 
 pub fn hex_notation_test() {
