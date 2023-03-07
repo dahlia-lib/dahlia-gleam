@@ -22,3 +22,16 @@ gleam add dahlia
 ```
 
 and its documentation can be found at <https://hexdocs.pm/dahlia>.
+
+
+# Color Codes
+
+You can find a list of color codes on [the minecraft wiki](https://minecraft.fandom.com/wiki/Formatting_codes).
+
+Addtionally you can do `&[#HEXNUM]` for a custom foreground color and `&~[#HEXNUM]` for
+a custom background color.
+
+
+
+
+
