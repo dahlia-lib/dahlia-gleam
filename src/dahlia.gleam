@@ -114,7 +114,7 @@ fn serialize_and_build_rest(
 ///   |> dahlia.dprint("&aHello Wolrd")
 ///   |> dahlia.dprint("&aSomething else")
 /// ```
-pub fn dprint(d: Dahlia, string str: String) -> Dahlia {
+pub fn print(d: Dahlia, string str: String) -> Dahlia {
   convert(d, str)
   |> io.print
   d
@@ -122,7 +122,7 @@ pub fn dprint(d: Dahlia, string str: String) -> Dahlia {
 
 /// Print a string as a formatted string, but with a newline
 /// after it. Also return the Dahlia object.
-pub fn dprintln(d: Dahlia, string str: String) -> Dahlia {
+pub fn println(d: Dahlia, string str: String) -> Dahlia {
   convert(d, str)
   |> io.println
   d
@@ -165,6 +165,13 @@ pub fn merge_colors(d: Dahlia, colors: map.Map(String, Ansi)) {
     Some(old_colors) -> Dahlia(..d, colors: Some(map.merge(old_colors, colors)))
     None -> Dahlia(..d, colors: Some(colors))
   }
+}
+
+/// Print the reset colors character and return the dahlia object.
+pub fn reset(d: Dahlia) -> Dahlia {
+  dahlia()
+  |> print("&r")
+  d
 }
 
 /// Use a custom escape character for you dahlia strings.
