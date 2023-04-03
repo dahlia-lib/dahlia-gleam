@@ -8,8 +8,8 @@ A Gleam port of [Dahlia](https://github.com/dahlia-lib/Dahlia) — a simple text
 ## Exmaple
 
 ```gleam
-dahlia.dahlia()
-  |> dahlia.dprint("&aHello World")
+dahlia.new()
+  |> dahlia.print("&aHello World")
 ```
 
 

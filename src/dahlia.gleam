@@ -5,21 +5,21 @@ import gleam/list
 import gleam/option.{None, Option, Some}
 import dahlia/ansi.{Ansi}
 import dahlia/colors
-import dahlia/env
+import dahlia/internal/env
 
 pub type Dahlia {
   Dahlia(colors: Option(map.Map(String, Ansi)), escape_character: String)
 }
 
-/// Get a new dahlia object.
-pub fn dahlia() -> Dahlia {
+/// Create a new dahlia object.
+pub fn new() -> Dahlia {
   Dahlia(colors: None, escape_character: "&")
 }
 
 /// Convert a string to a formatted string.
 ///
 /// ```gleam
-/// let result = dahlia.dahlia()
+/// let result = dahlia.new()
 ///   |> dahlia.convert("&aABCD")
 /// io.println(result)
 /// ```
@@ -110,9 +110,9 @@ fn serialize_and_build_rest(
 /// Print a string as a formatted string and return the Dahlia object.
 ///
 /// ```gleam
-/// dahlia.dahlia()
-///   |> dahlia.dprint("&aHello Wolrd")
-///   |> dahlia.dprint("&aSomething else")
+/// dahlia.new()
+///   |> dahlia.print("&aHello Wolrd")
+///   |> dahlia.print("&aSomething else")
 /// ```
 pub fn print(d: Dahlia, string str: String) -> Dahlia {
   convert(d, str)
@@ -135,9 +135,9 @@ pub fn println(d: Dahlia, string str: String) -> Dahlia {
 /// import dahlia/colors
 ///
 /// fn main() {
-///   dahlia.dahlia()
+///   dahlia.new()
 ///   |> dahlia.with_colors(colors.three_bit())
-///   |> dahlia.dprint("&aHello Wolrd")
+///   |> dahlia.print("&aHello Wolrd")
 /// }
 /// ```
 pub fn with_colors(d: Dahlia, colors: map.Map(String, Ansi)) {
@@ -152,12 +152,12 @@ pub fn with_colors(d: Dahlia, colors: map.Map(String, Ansi)) {
 /// import gleam/map
 ///
 /// fn main() {
-///   dahlia.dahlia()
+///   dahlia.new()
 ///   |> dahlia.merge_colors(
 ///     map.new()
 ///     |> map.insert("c", ansi.Ansi24(255, 175, 243))
 ///   )
-///   |> dahlia.dprint("&cHello Wolrd")
+///   |> dahlia.print("&cHello Wolrd")
 /// }
 /// ```
 pub fn merge_colors(d: Dahlia, colors: map.Map(String, Ansi)) {
@@ -169,7 +169,7 @@ pub fn merge_colors(d: Dahlia, colors: map.Map(String, Ansi)) {
 
 /// Print the reset colors character and return the dahlia object.
 pub fn reset(d: Dahlia) -> Dahlia {
-  dahlia()
+  new()
   |> print("&r")
   d
 }
@@ -181,11 +181,31 @@ pub fn reset(d: Dahlia) -> Dahlia {
 /// import dahlia/colors
 ///
 /// fn main() {
-///   dahlia.dahlia()
+///   dahlia.new()
 ///   |> dahlia.with_escape_character("%")
-///   |> dahlia.dprint("%aHello Wolrd")
+///   |> dahlia.print("%aHello Wolrd")
 /// }
 /// ```
 pub fn with_escape_character(d: Dahlia, escape_character: String) -> Dahlia {
   Dahlia(..d, escape_character: escape_character)
+}
+
+fn unwrap_assert(result: Result(a, b)) -> a {
+  let assert Ok(a) = result
+  a
+}
+
+pub fn main() {
+  new()
+  |> with_colors(
+    map.new()
+    |> map.insert("P", ansi.from_hex("#5BCEFA") |> unwrap_assert)
+    |> map.insert("B", ansi.from_hex("#F5A9B8") |> unwrap_assert)
+    |> map.insert("W", ansi.from_hex("#FFFFFF") |> unwrap_assert)
+  )
+  |> println("&P██████████████████")
+  |> println("&B██████████████████")
+  |> println("&W██████████████████")
+  |> println("&B██████████████████")
+  |> println("&P██████████████████")
 }
