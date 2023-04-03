@@ -9,7 +9,7 @@ A Gleam port of [Dahlia](https://github.com/dahlia-lib/Dahlia) — a simple text
 
 ```gleam
 dahlia.dahlia()
-  |> dahlia.dprint("&aHello Wolrd")
+  |> dahlia.dprint("&aHello World")
 ```
 
 

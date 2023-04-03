@@ -2,8 +2,8 @@ name = "dahlia"
 version = "0.1.3"
 description = "Dahlia — a simple text formatting package, inspired by the game Minecraft."
 licences = ["WTFPL"]
-repository = { type = "github", user = "dahlia-lib", repo = "Dahlia.gleam" }
-links = [{ title = "Website", href = "https://github.com/dahlia-lib/Dahlia.gleam" }]
+repository = { type = "github", user = "dahlia-lib", repo = "dahlia-gleam" }
+links = [{ title = "Website", href = "https://github.com/dahlia-lib/dahlia-gleam" }]
 
 [dependencies]
 gleam_stdlib = "~> 0.27"
