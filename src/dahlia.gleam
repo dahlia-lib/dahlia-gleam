@@ -199,9 +199,21 @@ pub fn main() {
   new()
   |> with_colors(
     map.new()
-    |> map.insert("P", ansi.from_hex("#5BCEFA") |> unwrap_assert)
-    |> map.insert("B", ansi.from_hex("#F5A9B8") |> unwrap_assert)
-    |> map.insert("W", ansi.from_hex("#FFFFFF") |> unwrap_assert)
+    |> map.insert(
+      "P",
+      ansi.from_hex("#5BCEFA")
+      |> unwrap_assert,
+    )
+    |> map.insert(
+      "B",
+      ansi.from_hex("#F5A9B8")
+      |> unwrap_assert,
+    )
+    |> map.insert(
+      "W",
+      ansi.from_hex("#FFFFFF")
+      |> unwrap_assert,
+    ),
   )
   |> println("&P██████████████████")
   |> println("&B██████████████████")
